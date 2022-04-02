@@ -12,6 +12,10 @@
             </ResourceDictionary.MergedDictionaries>
             <!-- Other app resources here -->
 
+            <!--<DataTemplate x:Key="MauiAppTitleBarTemplate">
+                <TextBlock Height="300">RABBITS</TextBlock>
+            </DataTemplate>-->
         </ResourceDictionary>
+
     </Application.Resources>
 </Application>

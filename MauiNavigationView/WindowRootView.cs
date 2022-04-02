@@ -142,6 +142,7 @@ namespace Microsoft.Maui.Platform
 			}
 
 			SetWindowTitle(_windowTitle);
+			UpdateAppTitleBarMargins();
 		}
 
 		private void OnAppTitleBarContentControlLoaded(object sender, RoutedEventArgs e)
