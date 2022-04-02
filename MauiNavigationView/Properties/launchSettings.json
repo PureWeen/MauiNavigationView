@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "MauiNavigationView (Package)": {
+      "commandName": "MsixPackage"
+    },
+    //"Unpackaged Windows Machine (on 10.0.20348)": {
+    //  "commandName": "Project"
+    //}
+  }
+}

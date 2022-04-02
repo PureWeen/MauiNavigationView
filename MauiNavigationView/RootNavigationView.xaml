@@ -1,0 +1,36 @@
+<platform:MauiNavigationView
+    xmlns:platform="using:Microsoft.Maui.Platform"
+    x:Class="Microsoft.Maui.Platform.RootNavigationView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    IsSettingsVisible = "false"
+    IsPaneToggleButtonVisible = "False"
+    PaneDisplayMode = "LeftMinimal"
+    IsTitleBarAutoPaddingEnabled = "false"
+    IsBackEnabled="True"
+    IsBackButtonVisible = "Visible"
+    >
+    <platform:MauiNavigationView.MenuItems>
+        <NavigationViewItem Content="Item 1"></NavigationViewItem>
+        <NavigationViewItem Content="Item 2"></NavigationViewItem>
+        <NavigationViewItem Content="Item 3"></NavigationViewItem>
+    </platform:MauiNavigationView.MenuItems>
+    <platform:MauiNavigationView.PaneHeader>
+        <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <TextBlock Text="header"></TextBlock>
+        </StackPanel>
+    </platform:MauiNavigationView.PaneHeader>
+    <platform:MauiNavigationView.PaneCustomContent>
+        <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <TextBlock Text="whatver"></TextBlock>
+        </StackPanel>
+    </platform:MauiNavigationView.PaneCustomContent>
+    <platform:MauiNavigationView.PaneFooter>
+        <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <TextBlock Text="footer"></TextBlock>
+        </StackPanel>
+    </platform:MauiNavigationView.PaneFooter>
+</platform:MauiNavigationView>
