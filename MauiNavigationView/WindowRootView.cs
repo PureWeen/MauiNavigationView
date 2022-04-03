@@ -160,7 +160,6 @@ namespace Microsoft.Maui.Platform
 				NavigationViewControl.BackRequested += OnNavigationViewBackRequested;
 				NavigationViewControl.RegisterPropertyChangedCallback(NavigationView.IsBackButtonVisibleProperty, AppBarNavigationIconsChanged);
 				NavigationViewControl.RegisterPropertyChangedCallback(NavigationView.IsPaneToggleButtonVisibleProperty, AppBarNavigationIconsChanged);
-				NavigationViewControl.RegisterPropertyChangedCallback(MauiNavigationView.NavigationBackButtonHeightProperty, AppBarNavigationIconsChanged);
 				NavigationViewControl.RegisterPropertyChangedCallback(MauiNavigationView.NavigationBackButtonWidthProperty, AppBarNavigationIconsChanged);
 
 				ContentChanged?.Invoke(this, EventArgs.Empty);
@@ -209,40 +208,43 @@ namespace Microsoft.Maui.Platform
 			if (AppTitleBarContentControl == null)
 				return;
 
-			//const int topIndent = 16;
-			double expandedIndent = NavigationViewControl.ButtonHolderGrid.ActualWidth;
-			double minimalIndent = 0;
-
-			// TODO: Once we implement Left pane navigation we'll probably need to adjust these calculations a bit
-			if (!NavigationViewControl.IsBackButtonVisible.Equals(NavigationViewBackButtonVisible.Collapsed))
-			{
-				minimalIndent += expandedIndent;
-			}
-
-			if (NavigationViewControl.IsPaneToggleButtonVisible)
-			{
-				minimalIndent += expandedIndent;
-			}
-
 			WThickness currMargin = AppTitleBarContentControl.Margin;
+			var leftIndent = NavigationViewControl.ButtonHolderGrid.ActualWidth;
+			AppTitleBarContentControl.Margin = new WThickness(leftIndent, currMargin.Top, currMargin.Right, currMargin.Bottom);
+			//const int topIndent = 16;
+			//double expandedIndent = NavigationViewControl.ButtonHolderGrid.ActualWidth;
+			//double minimalIndent = 0;
 
-			// Set the TitleBar margin dependent on NavigationView display mode
-			if (NavigationViewControl.PaneDisplayMode == NavigationViewPaneDisplayMode.Top)
-			{
-				AppTitleBarContentControl.Margin = new WThickness(minimalIndent, currMargin.Top, currMargin.Right, currMargin.Bottom);
-			}
-			else if (NavigationViewControl.PaneDisplayMode == NavigationViewPaneDisplayMode.Left)
-			{
-				AppTitleBarContentControl.Margin = new WThickness(minimalIndent, currMargin.Top, currMargin.Right, currMargin.Bottom);
-			}
-			else if (NavigationViewControl.DisplayMode == NavigationViewDisplayMode.Minimal)
-			{
-				AppTitleBarContentControl.Margin = new WThickness(minimalIndent, currMargin.Top, currMargin.Right, currMargin.Bottom);
-			}
-			else
-			{
-				AppTitleBarContentControl.Margin = new WThickness(expandedIndent, currMargin.Top, currMargin.Right, currMargin.Bottom);
-			}
+			//// TODO: Once we implement Left pane navigation we'll probably need to adjust these calculations a bit
+			//if (!NavigationViewControl.IsBackButtonVisible.Equals(NavigationViewBackButtonVisible.Collapsed))
+			//{
+			//	minimalIndent += expandedIndent;
+			//}
+
+			//if (NavigationViewControl.IsPaneToggleButtonVisible)
+			//{
+			//	minimalIndent += expandedIndent;
+			//}
+
+			//WThickness currMargin = AppTitleBarContentControl.Margin;
+
+			//// Set the TitleBar margin dependent on NavigationView display mode
+			//if (NavigationViewControl.PaneDisplayMode == NavigationViewPaneDisplayMode.Top)
+			//{
+			//	AppTitleBarContentControl.Margin = new WThickness(minimalIndent, currMargin.Top, currMargin.Right, currMargin.Bottom);
+			//}
+			//else if (NavigationViewControl.PaneDisplayMode == NavigationViewPaneDisplayMode.Left)
+			//{
+			//	AppTitleBarContentControl.Margin = new WThickness(minimalIndent, currMargin.Top, currMargin.Right, currMargin.Bottom);
+			//}
+			//else if (NavigationViewControl.DisplayMode == NavigationViewDisplayMode.Minimal)
+			//{
+			//	AppTitleBarContentControl.Margin = new WThickness(minimalIndent, currMargin.Top, currMargin.Right, currMargin.Bottom);
+			//}
+			//else
+			//{
+			//	AppTitleBarContentControl.Margin = new WThickness(expandedIndent, currMargin.Top, currMargin.Right, currMargin.Bottom);
+			//}
 
 			// If the AppIcon loads correctly then we set a margin for the text from the image
 			if (_hasTitleBarImage)

@@ -2,7 +2,8 @@
     x:Class="MauiNavigationView.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:MauiNavigationView">
+    xmlns:local="using:MauiNavigationView"
+    xmlns:platform="using:Microsoft.Maui.Platform">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -15,6 +16,7 @@
             <!--<DataTemplate x:Key="MauiAppTitleBarTemplate">
                 <TextBlock Height="300">RABBITS</TextBlock>
             </DataTemplate>-->
+
         </ResourceDictionary>
 
     </Application.Resources>
