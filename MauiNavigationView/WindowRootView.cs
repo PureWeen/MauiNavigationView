@@ -203,7 +203,12 @@ namespace Microsoft.Maui.Platform
 		void UpdateAppTitleBarMargins()
 		{
 			if (NavigationViewControl?.ButtonHolderGrid == null)
+			{
 				return;
+			}
+
+			NavigationViewControl.ButtonHolderGrid.SizeChanged -= ButtonHolderGrid_SizeChanged;
+			NavigationViewControl.ButtonHolderGrid.SizeChanged += ButtonHolderGrid_SizeChanged;
 
 			if (AppTitleBarContentControl == null)
 				return;
@@ -266,6 +271,12 @@ namespace Microsoft.Maui.Platform
 				if (AppFontIcon != null)
 					AppFontIcon.Visibility = UI.Xaml.Visibility.Collapsed;
 			}
+		}
+
+		// TODO MAUI CLEANUP
+		private void ButtonHolderGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+		{
+			UpdateAppTitleBarMargins();
 		}
 
 		static void OnAppTitleBarTemplateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
