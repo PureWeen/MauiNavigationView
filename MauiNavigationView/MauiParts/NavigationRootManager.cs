@@ -90,6 +90,12 @@ namespace Microsoft.Maui.Platform
 			}
 		}
 
+		public virtual void Disconnect()
+		{
+			_platformWindow.Activated -= OnWindowActivated;
+			_rootView.Content = null;
+		}
+
 		internal void UpdateAppTitleBar(bool isActive)
 		{
 			if (!UseCustomAppTitleBar)

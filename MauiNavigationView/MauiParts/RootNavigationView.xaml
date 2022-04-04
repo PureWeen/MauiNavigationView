@@ -12,10 +12,10 @@
     IsTitleBarAutoPaddingEnabled = "false"
     IsBackEnabled="True"
     IsBackButtonVisible = "Visible">
-    <platform:MauiNavigationView.Toolbar>
+    <!--<platform:MauiNavigationView.Toolbar>
         <platform:TestMauiToolbar>
         </platform:TestMauiToolbar>
-    </platform:MauiNavigationView.Toolbar>
+    </platform:MauiNavigationView.Toolbar>-->
     <platform:MauiNavigationView.MenuItems>
         <NavigationViewItem Content="Item 1"></NavigationViewItem>
         <NavigationViewItem Content="Item 2"></NavigationViewItem>

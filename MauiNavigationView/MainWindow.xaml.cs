@@ -35,6 +35,17 @@ namespace MauiNavigationView
 			NavigationRootManager.Instance = new NavigationRootManager(this);
 			this.ExtendsContentIntoTitleBar = true;
 			NavigationRootManager.Instance.Connect(new TextBlock() { Text = "CONTENT" });
+
+			//NavigationRootManager.Instance.Connect(
+			//	new Microsoft.Maui.Platform.MauiNavigationView()
+			//	{
+			//		Content = new TextBlock() { Text = "CONTENT" },
+			//		PaneDisplayMode = NavigationViewPaneDisplayMode.Top,
+			//		IsBackButtonVisible = NavigationViewBackButtonVisible.Collapsed,
+			//		IsSettingsVisible = false,
+			//		IsPaneToggleButtonVisible = false
+			//	});
+
 			Content = NavigationRootManager.Instance.RootView;
 		}
 	}

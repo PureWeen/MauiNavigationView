@@ -4,11 +4,15 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Data;
 using Windows.Foundation;
+using WThickness = Microsoft.UI.Xaml.Thickness;
+using WGridLength = Microsoft.UI.Xaml.GridLength;
 
 namespace Microsoft.Maui.Platform
 {
 	// This is needed by WinUI because of 
 	// https://github.com/microsoft/microsoft-ui-xaml/issues/2698#issuecomment-648751713
+	// This file currently doesn't have a XAML part because code generation currently breaks for
+	// our WinUI files if a xaml file inherits from a xaml file
 	[Microsoft.UI.Xaml.Data.Bindable]
 	public partial class RootNavigationView : MauiNavigationView
 	{
@@ -17,6 +21,17 @@ namespace Microsoft.Maui.Platform
 		double AppBarTitleHeight => _useCustomAppTitleBar ? _appBarTitleHeight : 0;
 		double _appBarTitleHeight;
 		bool _useCustomAppTitleBar;
+
+		public RootNavigationView()
+		{
+			RegisterPropertyChangedCallback(IsBackButtonVisibleProperty, BackButtonVisibleChanged);
+			RegisterPropertyChangedCallback(OpenPaneLengthProperty, PaneLengthPropertyChanged);
+			RegisterPropertyChangedCallback(HeaderProperty, HeaderPropertyChanged);
+			RegisterPropertyChangedCallback(PaneFooterProperty, HeaderPropertyChanged);
+			RegisterPropertyChangedCallback(PaneDisplayModeProperty, PaneDisplayModeChanged);
+			this.PaneOpened += (_, __) => UpdatePaneContentGridMargin();
+			this.DisplayModeChanged += (_, __) => UpdateNavigationAndPaneButtonHolderGridStyles();
+		}
 
 		internal MauiToolbar? HeaderControl
 		{
@@ -35,18 +50,6 @@ namespace Microsoft.Maui.Platform
 		{
 			get;
 			private set;
-		}
-
-		public RootNavigationView()
-		{
-			InitializeComponent();
-			RegisterPropertyChangedCallback(IsBackButtonVisibleProperty, BackButtonVisibleChanged);
-			RegisterPropertyChangedCallback(OpenPaneLengthProperty, PaneLengthPropertyChanged);
-			RegisterPropertyChangedCallback(HeaderProperty, HeaderPropertyChanged);
-			RegisterPropertyChangedCallback(PaneFooterProperty, HeaderPropertyChanged);
-			RegisterPropertyChangedCallback(PaneDisplayModeProperty, PaneDisplayModeChanged);
-			this.PaneOpened += (_, __) => UpdatePaneContentGridMargin();
-			this.DisplayModeChanged += (_, __) => UpdateNavigationAndPaneButtonHolderGridStyles();
 		}
 
 		void PaneDisplayModeChanged(DependencyObject sender, DependencyProperty dp)
@@ -194,13 +197,13 @@ namespace Microsoft.Maui.Platform
 			PaneContentGrid.RowDefinitions[1]
 				.RegisterPropertyChangedCallback(RowDefinition.HeightProperty, PaneContentTopPaddingChanged);
 
-			ButtonHolderGrid.SizeChanged += (_, args) =>
+			ButtonHolderGrid!.SizeChanged += (_, args) =>
 			{
 				UpdateNavigationAndPaneButtonHolderGridStyles();
 				UpdatePaneContentGridMargin();
 			};
 
-			TogglePaneButton.SizeChanged += (_, args) =>
+			TogglePaneButton!.SizeChanged += (_, args) =>
 			{
 				UpdateNavigationAndPaneButtonHolderGridStyles();
 				UpdatePaneContentGridMargin();
@@ -219,9 +222,9 @@ namespace Microsoft.Maui.Platform
 		void UpdateContentGridMargin()
 		{
 			if (PaneDisplayMode == NavigationViewPaneDisplayMode.Top)
-				NavigationViewContentMargin = new Thickness(0, 0, 0, 0);
+				NavigationViewContentMargin = new WThickness(0, 0, 0, 0);
 			else
-				NavigationViewContentMargin = new Thickness(0, AppBarTitleHeight, 0, 0);
+				NavigationViewContentMargin = new WThickness(0, AppBarTitleHeight, 0, 0);
 		}
 
 		internal void UpdateAppTitleBar(double appTitleBarHeight)
@@ -257,9 +260,9 @@ namespace Microsoft.Maui.Platform
 				PaneToggleButtonHeight = paneToggleHeight;
 				PaneToggleButtonWidth = DefaultPaneToggleButtonWidth * paneToggleRatio;
 
-				NavigationViewButtonHolderGridMargin = new Thickness(0, 0, 0, 0);
-				NavigationViewBackButtonMargin = new Thickness(0, 0, 0, 0);
-				PaneToggleButtonPadding = new Thickness();
+				NavigationViewButtonHolderGridMargin = new WThickness(0, 0, 0, 0);
+				NavigationViewBackButtonMargin = new WThickness(0, 0, 0, 0);
+				PaneToggleButtonPadding = new WThickness();
 			}
 			else if (PaneDisplayMode == NavigationViewPaneDisplayMode.LeftCompact ||
 					PaneDisplayMode == NavigationViewPaneDisplayMode.Left ||
@@ -270,9 +273,9 @@ namespace Microsoft.Maui.Platform
 				this.ClearValue(PaneToggleButtonHeightProperty);
 				this.ClearValue(PaneToggleButtonWidthProperty);
 
-				NavigationViewButtonHolderGridMargin = new Thickness(0, 0, 0, 0);
-				NavigationViewBackButtonMargin = new Thickness(4, 0, 0, 2);
-				PaneToggleButtonPadding = new Thickness(4, 2, 4, 2);
+				NavigationViewButtonHolderGridMargin = new WThickness(0, 0, 0, 0);
+				NavigationViewBackButtonMargin = new WThickness(4, 0, 0, 2);
+				PaneToggleButtonPadding = new WThickness(4, 2, 4, 2);
 			}
 
 			UpdatePaneContentGridMargin();
@@ -288,13 +291,13 @@ namespace Microsoft.Maui.Platform
 		// so that the content is below the pane toggle and back button
 		void UpdatePaneContentGridMargin()
 		{
-			if (ButtonHolderGrid == null || ContentPaneTopPadding == null)
+			if (ButtonHolderGrid == null || ContentPaneTopPadding == null || PaneContentGrid == null)
 				return;
 
 			var height = Math.Max(ButtonHolderGrid.ActualHeight, _appBarTitleHeight);
 			if (PaneContentGrid.RowDefinitions[1].Height.Value != height)
 			{
-				PaneContentGrid.RowDefinitions[1].Height = new GridLength(height);
+				PaneContentGrid.RowDefinitions[1].Height = new WGridLength(height);
 				ContentPaneTopPadding.Height = 0;
 			}
 		}
