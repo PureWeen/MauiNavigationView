@@ -47,6 +47,11 @@ namespace MauiNavigationView
 			//	});
 
 			Content = NavigationRootManager.Instance.RootView;
+
+
+			var mauiRootView = NavigationRootManager.Instance.RootView as WindowRootView;
+
+
 		}
 	}
 }

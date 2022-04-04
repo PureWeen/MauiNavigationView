@@ -9,6 +9,7 @@ using WThickness = Microsoft.UI.Xaml.Thickness;
 using WRectangle = Microsoft.UI.Xaml.Shapes.Rectangle;
 using System.Collections.Generic;
 using Microsoft.UI.Xaml.Media;
+using System.Collections;
 
 namespace Microsoft.Maui.Platform
 {
@@ -32,10 +33,13 @@ namespace Microsoft.Maui.Platform
 		internal Button? NavigationViewCloseButton { get; private set; }
 		internal ColumnDefinition? PaneHeaderCloseButtonColumn { get; private set; }
 		internal ColumnDefinition? PaneHeaderToggleButtonColumn { get; private set; }
+		internal ContentControl? PaneCustomContentBorder { get; private set; }
+		internal RowDefinition? ItemsContainerRow { get; private set; }
 
 		public MauiNavigationView()
 		{
-			InitializeComponent();
+			this.RegisterPropertyChangedCallback(MenuItemsSourceProperty, (_, __) => UpdateMenuItemsContainerHeight());
+			this.RegisterPropertyChangedCallback(MenuItemsProperty, (_, __) => UpdateMenuItemsContainerHeight());
 		}
 
 		protected override void OnApplyTemplate()
@@ -56,6 +60,8 @@ namespace Microsoft.Maui.Platform
 			NavigationViewCloseButton = (Button)GetTemplateChild("NavigationViewCloseButton");
 			PaneHeaderCloseButtonColumn = (ColumnDefinition)GetTemplateChild("PaneHeaderCloseButtonColumn");
 			PaneHeaderToggleButtonColumn = (ColumnDefinition)GetTemplateChild("PaneHeaderToggleButtonColumn");
+			PaneCustomContentBorder = (ContentControl)GetTemplateChild("PaneCustomContentBorder");
+			ItemsContainerRow = (RowDefinition)GetTemplateChild("ItemsContainerRow");
 
 			UpdateNavigationBackButtonSize();
 			UpdateNavigationViewContentMargin();
@@ -78,6 +84,32 @@ namespace Microsoft.Maui.Platform
 
 			PaneHeaderToggleButtonColumn.Width = new WGridLength(0);
 			PaneHeaderCloseButtonColumn.Width = new WGridLength(0);
+
+			UpdateMenuItemsContainerHeight();
+		}
+
+
+		void UpdateMenuItemsContainerHeight()
+		{
+			if (ItemsContainerRow == null || PaneContentGrid == null)
+				return;
+
+			// If we're not using the menu items then let the custom content row 
+			// occupy all available space
+			if (MenuItems?.Count > 0 || MenuItemsSource != null)
+			{
+				ItemsContainerRow.Height = new WGridLength(1, UI.Xaml.GridUnitType.Star);
+				PaneContentGrid.RowDefinitions[4].Height = new WGridLength(1, UI.Xaml.GridUnitType.Auto);
+			}
+			else
+			{
+				// This changes the menu items grid so it just sizes to its content
+				// By default it was always filling the entire container but we don't want that
+				ItemsContainerRow.Height = new WGridLength(1, UI.Xaml.GridUnitType.Auto);
+
+				// this forces the custom content to take up the entire height that it can
+				PaneContentGrid.RowDefinitions[4].Height = new WGridLength(1, UI.Xaml.GridUnitType.Star);
+			}
 		}
 
 		private protected virtual void OnApplyTemplateCore()
