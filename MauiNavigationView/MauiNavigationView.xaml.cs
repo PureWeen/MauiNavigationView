@@ -28,6 +28,8 @@ namespace Microsoft.Maui.Platform
 		internal Button? NavigationViewBackButton { get; private set; }
 		internal Button? TogglePaneButton { get; private set; }
 		internal Button? NavigationViewCloseButton { get; private set; }
+		internal ColumnDefinition PaneHeaderCloseButtonColumn { get; private set; }
+		internal ColumnDefinition PaneHeaderToggleButtonColumn { get; private set; }
 
 		public MauiNavigationView()
 		{
@@ -50,6 +52,8 @@ namespace Microsoft.Maui.Platform
 			NavigationViewBackButton = (Button)GetTemplateChild("NavigationViewBackButton");
 			TogglePaneButton = (Button)GetTemplateChild("TogglePaneButton");
 			NavigationViewCloseButton = (Button)GetTemplateChild("NavigationViewCloseButton");
+			PaneHeaderCloseButtonColumn = (ColumnDefinition)GetTemplateChild("PaneHeaderCloseButtonColumn");
+			PaneHeaderToggleButtonColumn = (ColumnDefinition)GetTemplateChild("PaneHeaderToggleButtonColumn");
 
 			UpdateNavigationBackButtonSize();
 			UpdateNavigationViewContentMargin();
@@ -66,12 +70,35 @@ namespace Microsoft.Maui.Platform
 
 			NavigationViewCloseButton.RegisterPropertyChangedCallback(Button.HeightProperty, (_, __) => UpdateNavigationBackButtonSize());
 			NavigationViewCloseButton.RegisterPropertyChangedCallback(Button.WidthProperty, (_, __) => UpdateNavigationBackButtonSize());
+
+			PaneHeaderCloseButtonColumn.RegisterPropertyChangedCallback(ColumnDefinition.WidthProperty, (_, __) => PaneHeaderCloseButtonColumn.Width = new GridLength(0));
+			PaneHeaderToggleButtonColumn.RegisterPropertyChangedCallback(ColumnDefinition.WidthProperty, (_, __) => PaneHeaderToggleButtonColumn.Width = new GridLength(0));
+
+			PaneHeaderToggleButtonColumn.Width = new GridLength(0);
+			PaneHeaderCloseButtonColumn.Width = new GridLength(0);
 		}
 
 		private protected virtual void OnApplyTemplateCore()
-		{
-
+		{			
 		}
+
+		#region Toolbar
+		public static readonly DependencyProperty ToolbarProperty
+			= DependencyProperty.Register(nameof(Toolbar), typeof(UIElement), typeof(MauiNavigationView),
+				new PropertyMetadata(null, (d, _) => ((RootNavigationView)d).ToolbarChanged()));
+
+		public UIElement? Toolbar
+		{
+			get => (UIElement?)GetValue(ToolbarProperty);
+			set => SetValue(ToolbarProperty, value);
+		}
+
+		protected private virtual void ToolbarChanged()
+		{
+			Header = Toolbar;
+		}
+
+		#endregion
 
 		#region NavigationViewBackButtonMargin
 		public static readonly DependencyProperty NavigationViewBackButtonMarginProperty
@@ -182,19 +209,14 @@ namespace Microsoft.Maui.Platform
 				if (NavigationViewBackButton.Height != NavigationBackButtonHeight)
 					NavigationViewBackButton.Height = NavigationBackButtonHeight;
 
-
 				if (NavigationViewBackButton.Width != NavigationBackButtonWidth)
 					NavigationViewBackButton.Width = NavigationBackButtonWidth;
-
 
 				if (NavigationViewCloseButton.Height != NavigationBackButtonHeight)
 					NavigationViewCloseButton.Height = NavigationBackButtonHeight;
 
-
 				if (NavigationViewCloseButton.Width != NavigationBackButtonWidth)
 					NavigationViewCloseButton.Width = NavigationBackButtonWidth;
-
-				
 			}
 		}
 		#endregion
@@ -202,17 +224,12 @@ namespace Microsoft.Maui.Platform
 		#region Flyout Custom Content
 		public static readonly DependencyProperty FlyoutCustomContentProperty
 			= DependencyProperty.Register(nameof(FlyoutCustomContent), typeof(UIElement), typeof(MauiNavigationView),
-				new PropertyMetadata(null, FlyoutCustomContentChanged));
+				new PropertyMetadata(null, (d, _) => ((RootNavigationView)d).UpdateFlyoutCustomContent()));
 
 		public UIElement FlyoutCustomContent
 		{
 			get => (UIElement)GetValue(FlyoutCustomContentProperty);
 			set => SetValue(FlyoutCustomContentProperty, value);
-		}
-
-		static void FlyoutCustomContentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-		{
-			((RootNavigationView)d).UpdateFlyoutCustomContent();
 		}
 
 		protected private virtual void UpdateFlyoutCustomContent()
@@ -221,9 +238,23 @@ namespace Microsoft.Maui.Platform
 		}
 		#endregion
 
-		#region PaneToggleButtonHeight/Width
+		#region PaneToggleButton
 		internal static double DefaultPaneToggleButtonHeight => (double)Application.Current.Resources["PaneToggleButtonHeight"];
-		internal static double DefaultPaneToggleButtonWidth => (double)Application.Current.Resources["PaneToggleButtonWidth"];
+
+		// The resource is set to 40 but it appears that the NavigationView manually sets the width to 48
+		internal static double DefaultPaneToggleButtonWidth => 48;//(double)Application.Current.Resources["PaneToggleButtonWidth"];
+
+		internal static Thickness DefaultPaneToggleButtonPadding => (Thickness)Application.Current.Resources["NavigationViewItemButtonMargin"];
+
+		public static readonly DependencyProperty PaneToggleButtonPaddingProperty
+			= DependencyProperty.Register(nameof(PaneToggleButtonPadding), typeof(Thickness), typeof(MauiNavigationView),
+				new PropertyMetadata(DefaultPaneToggleButtonPadding, OnPaneToggleButtonSizeChanged));
+
+		public Thickness PaneToggleButtonPadding
+		{
+			get => (Thickness)GetValue(PaneToggleButtonPaddingProperty);
+			set => SetValue(PaneToggleButtonPaddingProperty, value);
+		}
 
 		public static readonly DependencyProperty PaneToggleButtonHeightProperty
 			= DependencyProperty.Register(nameof(PaneToggleButtonHeight), typeof(double), typeof(MauiNavigationView),
@@ -258,28 +289,32 @@ namespace Microsoft.Maui.Platform
 				if (PaneToggleButtonHeight != TogglePaneButton.Height)
 				{
 					TogglePaneButton.Height = PaneToggleButtonHeight;
-					TogglePaneButton.MinHeight = PaneToggleButtonHeight;
-					Resources["PaneToggleButtonHeight"] = PaneToggleButtonHeight;
+
+					var togglePaneButtonMinHeight = Math.Min((double)Application.Current.Resources["PaneToggleButtonHeight"], PaneToggleButtonHeight);
+					if (TogglePaneButton.MinHeight != PaneToggleButtonHeight)
+						TogglePaneButton.MinHeight = PaneToggleButtonHeight;
 
 					if (TogglePaneButton.GetFirstDescendant<Grid>() is Grid grid)
 					{
-						grid.Height = PaneToggleButtonHeight;
+						if (grid.Height != PaneToggleButtonHeight)
+							grid.Height = PaneToggleButtonHeight;
 
 						// The row definition is bound to PaneToggleButtonHeight
 						// the height is bound to MinHeight of the button
-						grid.RowDefinitions[0].Height = new GridLength(PaneToggleButtonHeight);
+						if (grid.RowDefinitions[0].Height.Value != PaneToggleButtonHeight)
+							grid.RowDefinitions[0].Height = new GridLength(PaneToggleButtonHeight);
 					}
 				}
 
 				if (PaneToggleButtonWidth != TogglePaneButton.Width)
-				{
 					TogglePaneButton.Width = PaneToggleButtonWidth;
-					TogglePaneButton.MinWidth = PaneToggleButtonWidth;
-					Resources["PaneToggleButtonWidth"] = PaneToggleButtonWidth;
-				}
 
-				//TODO MAUI better calculate these
-				TogglePaneButton.Padding = new Thickness();
+				var togglePaneButtonMinWidth = Math.Min((double)Application.Current.Resources["PaneToggleButtonWidth"], PaneToggleButtonWidth);
+				if (TogglePaneButton.MinWidth != togglePaneButtonMinWidth)
+					TogglePaneButton.MinWidth = togglePaneButtonMinWidth;
+
+				if (TogglePaneButton.Padding != PaneToggleButtonPadding)
+					TogglePaneButton.Padding = PaneToggleButtonPadding;
 			}
 		}
 		#endregion

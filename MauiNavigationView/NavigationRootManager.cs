@@ -21,24 +21,25 @@ namespace Microsoft.Maui.Platform
 			_rootView.OnAppTitleBarChanged += OnAppTitleBarChanged;
 		}
 
-        private void OnBackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
-        {
-        }
+		private void OnBackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
+		{
+		}
 
-        internal bool UseCustomAppTitleBar
-        {
+		internal bool UseCustomAppTitleBar
+		{
 			get => _platformWindow.ExtendsContentIntoTitleBar;
 			set => _platformWindow.ExtendsContentIntoTitleBar = value;
 		}
 
 		internal FrameworkElement? AppTitleBar => _rootView.AppTitleBar as FrameworkElement;
-		internal MauiToolbar? ToolBar => _toolbar;
+		internal MauiToolbar? ToolBar => _toolbar ?? _rootView?.NavigationViewControl?.Toolbar as MauiToolbar;
 
 		void OnApplyTemplateFinished(object? sender, EventArgs e)
 		{
-			if (_rootView.NavigationViewControl != null)
+			if (_rootView.NavigationViewControl != null &&
+				_rootView.NavigationViewControl.Toolbar != _toolbar)
 			{
-				_rootView.NavigationViewControl.HeaderControl = _toolbar;
+				_rootView.NavigationViewControl.Toolbar = _toolbar;
 			}
 		}
 
@@ -138,7 +139,7 @@ namespace Microsoft.Maui.Platform
 
 			if (_rootView.NavigationViewControl != null)
 			{
-				_rootView.NavigationViewControl.HeaderControl = _toolbar;
+				_rootView.NavigationViewControl.Toolbar = _toolbar;
 			}
 		}
 

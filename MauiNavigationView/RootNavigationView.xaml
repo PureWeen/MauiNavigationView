@@ -8,11 +8,19 @@
     mc:Ignorable="d"
     IsSettingsVisible = "false"
     IsPaneToggleButtonVisible = "True"
-    PaneDisplayMode="LeftMinimal"
+    PaneDisplayMode="Top"
     IsTitleBarAutoPaddingEnabled = "false"
     IsBackEnabled="True"
     IsBackButtonVisible = "Visible">
-    <platform:MauiNavigationView.PaneHeader>
+    <platform:MauiNavigationView.Toolbar>
+        <platform:TestMauiToolbar>
+        </platform:TestMauiToolbar>
+    </platform:MauiNavigationView.Toolbar>
+    <platform:MauiNavigationView.MenuItems>
+        <NavigationViewItem Content="Item 1"></NavigationViewItem>
+        <NavigationViewItem Content="Item 2"></NavigationViewItem>
+    </platform:MauiNavigationView.MenuItems>
+    <!--<platform:MauiNavigationView.PaneHeader>
         <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <TextBlock Text="header"></TextBlock>
         </StackPanel>
@@ -29,5 +37,5 @@
         <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <TextBlock Text="footer"></TextBlock>
         </StackPanel>
-    </platform:MauiNavigationView.PaneFooter>
+    </platform:MauiNavigationView.PaneFooter>-->
 </platform:MauiNavigationView>
