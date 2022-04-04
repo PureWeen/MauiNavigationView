@@ -21,8 +21,11 @@ namespace Microsoft.Maui.Platform
 			_rootView.OnAppTitleBarChanged += OnAppTitleBarChanged;
 		}
 
-		private void OnBackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
+		void OnBackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
 		{
+			_platformWindow
+				.GetWindow()?
+				.BackButtonClicked();
 		}
 
 		internal bool UseCustomAppTitleBar
