@@ -35,6 +35,8 @@ namespace Microsoft.Maui.Platform
 		internal ColumnDefinition? PaneHeaderToggleButtonColumn { get; private set; }
 		internal ContentControl? PaneCustomContentBorder { get; private set; }
 		internal RowDefinition? ItemsContainerRow { get; private set; }
+		internal RowDefinition? PaneContentGridToggleButtonRow { get; private set; }
+		internal RowDefinition? PaneHeaderContentBorderRow { get; private set; }
 
 		public MauiNavigationView()
 		{
@@ -62,6 +64,8 @@ namespace Microsoft.Maui.Platform
 			PaneHeaderToggleButtonColumn = (ColumnDefinition)GetTemplateChild("PaneHeaderToggleButtonColumn");
 			PaneCustomContentBorder = (ContentControl)GetTemplateChild("PaneCustomContentBorder");
 			ItemsContainerRow = (RowDefinition)GetTemplateChild("ItemsContainerRow");
+			PaneContentGridToggleButtonRow = (RowDefinition)GetTemplateChild("PaneContentGridToggleButtonRow");
+			PaneHeaderContentBorderRow = (RowDefinition)GetTemplateChild("PaneHeaderContentBorderRow");
 
 			UpdateNavigationBackButtonSize();
 			UpdateNavigationViewContentMargin();
@@ -79,13 +83,31 @@ namespace Microsoft.Maui.Platform
 			NavigationViewCloseButton.RegisterPropertyChangedCallback(Button.HeightProperty, (_, __) => UpdateNavigationBackButtonSize());
 			NavigationViewCloseButton.RegisterPropertyChangedCallback(Button.WidthProperty, (_, __) => UpdateNavigationBackButtonSize());
 
+
+			// These columns create a left padding on the PaneHeader
+			// So this code just removes that padding
 			PaneHeaderCloseButtonColumn.RegisterPropertyChangedCallback(ColumnDefinition.WidthProperty, (_, __) => PaneHeaderCloseButtonColumn.Width = new WGridLength(0));
 			PaneHeaderToggleButtonColumn.RegisterPropertyChangedCallback(ColumnDefinition.WidthProperty, (_, __) => PaneHeaderToggleButtonColumn.Width = new WGridLength(0));
-
 			PaneHeaderToggleButtonColumn.Width = new WGridLength(0);
 			PaneHeaderCloseButtonColumn.Width = new WGridLength(0);
 
+			// When the NavigationView is in locked mode the min height on the PaneHeader row gets set to 40
+			// Which creates space between the title bar and the top of the flyout content
+			PaneContentGridToggleButtonRow.MinHeight = 0;
+			PaneContentGridToggleButtonRow.RegisterPropertyChangedCallback(RowDefinition.MinHeightProperty, (_, __) =>
+				PaneContentGridToggleButtonRow.MinHeight = 0);
+
+			PaneHeaderContentBorderRow.MinHeight = 0;
+			PaneHeaderContentBorderRow.RegisterPropertyChangedCallback(RowDefinition.MinHeightProperty, (_, __) =>
+				PaneHeaderContentBorderRow.MinHeight = 0);
+
+
+			// WinUI has this set to -1,3,-1,3 but I'm not really sure why
+			// It causes the content to not be flush up against the title bar
+			PaneContentGrid.Margin = new WThickness(-1, 0, -1, 0);
 			UpdateMenuItemsContainerHeight();
+
+
 		}
 
 
@@ -323,21 +345,20 @@ namespace Microsoft.Maui.Platform
 				if (PaneToggleButtonHeight != TogglePaneButton.Height)
 				{
 					TogglePaneButton.Height = PaneToggleButtonHeight;
-
 					var togglePaneButtonMinHeight = Math.Min((double)Application.Current.Resources["PaneToggleButtonHeight"], PaneToggleButtonHeight);
-					if (TogglePaneButton.MinHeight != PaneToggleButtonHeight)
-						TogglePaneButton.MinHeight = PaneToggleButtonHeight;
+					if (TogglePaneButton.MinHeight != togglePaneButtonMinHeight)
+						TogglePaneButton.MinHeight = togglePaneButtonMinHeight;
+				}
 
-					if (TogglePaneButton.GetFirstDescendant<Grid>() is Grid grid)
-					{
-						if (grid.Height != PaneToggleButtonHeight)
-							grid.Height = PaneToggleButtonHeight;
+				if (TogglePaneButton.GetFirstDescendant<Grid>() is Grid grid)
+				{
+					if (grid.Height != PaneToggleButtonHeight)
+						grid.Height = PaneToggleButtonHeight;
 
-						// The row definition is bound to PaneToggleButtonHeight
-						// the height is bound to MinHeight of the button
-						if (grid.RowDefinitions[0].Height.Value != PaneToggleButtonHeight)
-							grid.RowDefinitions[0].Height = new WGridLength(PaneToggleButtonHeight);
-					}
+					// The row definition is bound to PaneToggleButtonHeight
+					// the height is bound to MinHeight of the button
+					if (grid.RowDefinitions[0].Height.Value != PaneToggleButtonHeight)
+						grid.RowDefinitions[0].Height = new WGridLength(PaneToggleButtonHeight);
 				}
 
 				if (PaneToggleButtonWidth != TogglePaneButton.Width)

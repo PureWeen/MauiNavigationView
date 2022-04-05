@@ -7,10 +7,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     IsSettingsVisible = "false"
-	IsPaneToggleButtonVisible = "false"
+	IsPaneToggleButtonVisible = "False"
+    IsBackEnabled="True"
 	PaneDisplayMode = "Left"
 	IsTitleBarAutoPaddingEnabled = "false"
-	IsBackButtonVisible = "Collapsed">
+	IsBackButtonVisible = "Visible"
+    PaneToggleButtonHeight="30"
+    >
     <!--<platform:MauiNavigationView.Toolbar>
         <platform:TestMauiToolbar>
         </platform:TestMauiToolbar>
@@ -20,22 +23,25 @@
         <NavigationViewItem Content="Item 2"></NavigationViewItem>
     </platform:MauiNavigationView.MenuItems>-->
     <!--<platform:MauiNavigationView.PaneHeader>
-        <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-            <TextBlock Text="header"></TextBlock>
-        </StackPanel>
+    <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <TextBlock Text="header"></TextBlock>
+    </StackPanel>
     </platform:MauiNavigationView.PaneHeader>
     <platform:MauiNavigationView.PaneFooter>
         <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <TextBlock Text="footer"></TextBlock>
         </StackPanel>
-    </platform:MauiNavigationView.PaneFooter>-->
+    </platform:MauiNavigationView.PaneFooter> -->
     <platform:MauiNavigationView.FlyoutCustomContent>
-        <ScrollViewer Height="1900"
-                      Background="Purple"
-                  HorizontalScrollBarVisibility="Auto" 
-                  VerticalScrollBarVisibility="Auto">
-            <TextBlock Width="300" TextWrapping="Wrap"
+        <StackPanel>
+            <TextBlock VerticalAlignment="Top"  TextWrapping="Wrap"
             Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac mi ipsum. Phasellus vel malesuada mauris. Donec pharetra, enim sit amet mattis tincidunt, felis nisi semper lectus, vel porta diam nisi in augue. Pellentesque lacus tortor, aliquam et faucibus id, rhoncus ut justo. Sed id lectus odio, eget pulvinar diam. Suspendisse eleifend ornare libero, in luctus purus aliquet non. Sed interdum, sem vitae rutrum rhoncus, felis ligula ultrices sem, in eleifend eros ante id neque." />
-        </ScrollViewer>
+        </StackPanel>
     </platform:MauiNavigationView.FlyoutCustomContent>
+    <!--<NavigationView.PaneHeader>
+        <TextBlock Text="Header"></TextBlock>
+    </NavigationView.PaneHeader>
+    <NavigationView.PaneFooter>
+        <TextBlock Text="Footfer"></TextBlock>
+    </NavigationView.PaneFooter>-->
 </platform:MauiNavigationView>

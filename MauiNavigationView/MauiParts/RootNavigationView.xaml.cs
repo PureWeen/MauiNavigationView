@@ -200,13 +200,11 @@ namespace Microsoft.Maui.Platform
 			ButtonHolderGrid!.SizeChanged += (_, args) =>
 			{
 				UpdateNavigationAndPaneButtonHolderGridStyles();
-				UpdatePaneContentGridMargin();
 			};
 
 			TogglePaneButton!.SizeChanged += (_, args) =>
 			{
 				UpdateNavigationAndPaneButtonHolderGridStyles();
-				UpdatePaneContentGridMargin();
 			};
 
 			UpdateTopNavAreaMargin();
@@ -245,20 +243,21 @@ namespace Microsoft.Maui.Platform
 
 		void UpdateNavigationAndPaneButtonHolderGridStyles()
 		{
+			var buttonHeight = Math.Min(_appBarTitleHeight, DefaultNavigationBackButtonHeight);
+			var buttonRatio = buttonHeight / DefaultNavigationBackButtonHeight;
+
+			NavigationBackButtonHeight = buttonHeight;
+			NavigationBackButtonWidth = DefaultNavigationBackButtonWidth * buttonRatio;
+
+			var paneToggleHeight = Math.Min(_appBarTitleHeight, DefaultPaneToggleButtonHeight);
+			var paneToggleRatio = paneToggleHeight / DefaultPaneToggleButtonHeight;
+
+			PaneToggleButtonHeight = paneToggleHeight;
+			PaneToggleButtonWidth = DefaultPaneToggleButtonWidth * paneToggleRatio;
+
 			if (PaneDisplayMode == NavigationViewPaneDisplayMode.LeftMinimal ||
 				PaneDisplayMode == NavigationViewPaneDisplayMode.Top)
 			{
-				var buttonHeight = Math.Min(_appBarTitleHeight, DefaultNavigationBackButtonHeight);
-				var buttonRatio = buttonHeight / DefaultNavigationBackButtonHeight;
-
-				NavigationBackButtonHeight = buttonHeight;
-				NavigationBackButtonWidth = DefaultNavigationBackButtonWidth * buttonRatio;
-
-				var paneToggleHeight = Math.Min(_appBarTitleHeight, DefaultPaneToggleButtonHeight);
-				var paneToggleRatio = paneToggleHeight / DefaultPaneToggleButtonHeight;
-
-				PaneToggleButtonHeight = paneToggleHeight;
-				PaneToggleButtonWidth = DefaultPaneToggleButtonWidth * paneToggleRatio;
 
 				NavigationViewButtonHolderGridMargin = new WThickness(0, 0, 0, 0);
 				NavigationViewBackButtonMargin = new WThickness(0, 0, 0, 0);
@@ -268,13 +267,12 @@ namespace Microsoft.Maui.Platform
 					PaneDisplayMode == NavigationViewPaneDisplayMode.Left ||
 					DisplayMode == NavigationViewDisplayMode.Compact)
 			{
-				this.ClearValue(NavigationBackButtonHeightProperty);
-				this.ClearValue(NavigationBackButtonWidthProperty);
-				this.ClearValue(PaneToggleButtonHeightProperty);
-				this.ClearValue(PaneToggleButtonWidthProperty);
-
 				NavigationViewButtonHolderGridMargin = new WThickness(0, 0, 0, 0);
-				NavigationViewBackButtonMargin = new WThickness(4, 0, 0, 2);
+				if (IsPaneToggleButtonVisible)
+					NavigationViewBackButtonMargin = new WThickness(4, 0, 0, 2);
+				else
+					NavigationViewBackButtonMargin = new WThickness(4, 0, 0, 0);
+
 				PaneToggleButtonPadding = new WThickness(4, 2, 4, 2);
 			}
 
@@ -300,12 +298,6 @@ namespace Microsoft.Maui.Platform
 				ContentPaneTopPadding.Height = 0;
 			}
 		}
-
-		//void OnPaneHeaderContentBorderSizeChanged(object sender, SizeChangedEventArgs e)
-		//{
-		//	_paneHeaderContentHeight = ((FrameworkElement)sender).ActualHeight;
-		//	UpdateFlyoutPaneSize();
-		//}
 
 		void OnPaneContentGridSizeChanged(object sender, SizeChangedEventArgs e)
 		{
