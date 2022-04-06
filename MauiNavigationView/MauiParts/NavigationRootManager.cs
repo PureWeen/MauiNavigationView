@@ -28,8 +28,6 @@ namespace Microsoft.Maui.Platform
 				.BackButtonClicked();
 		}
 
-		internal bool DontSetAppTitleBarForTestingPurposes { get; set; }
-
 		internal FrameworkElement? AppTitleBar => _rootView.AppTitleBar;
 
 		internal FrameworkElement? AppTitleBarContentControl => _rootView.AppTitleBarContentControl;
@@ -86,7 +84,9 @@ namespace Microsoft.Maui.Platform
 			{
 				_platformWindow.Activated += OnWindowActivated;
 
-				UpdateAppTitleBar(true);
+				if (_rootView.AppTitleBarContentControl != null && _platformWindow.ExtendsContentIntoTitleBar)
+					UpdateAppTitleBar(true);
+
 				SetWindowTitle(_platformWindow.GetWindow()?.Title);
 			}
 		}
@@ -99,9 +99,6 @@ namespace Microsoft.Maui.Platform
 
 		internal void UpdateAppTitleBar(bool isActive)
 		{
-			if (DontSetAppTitleBarForTestingPurposes)
-				return;
-
 			if (_rootView.AppTitleBarContentControl != null &&
 				_platformWindow.ExtendsContentIntoTitleBar)
 			{
