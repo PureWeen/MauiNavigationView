@@ -4,6 +4,9 @@ WinUI3 bits of .NET MAUI NavigationView extracted out to a WinUI 3 only project.
 
 https://github.com/dotnet/maui/pull/5811
 
+## TODO
+- Switch Implementation from `Window.SetTitleBar` to `AppWindow` APIs so that we can do draggable areas and styling
+- Figure out a Windows 10 solution
 
 ### Description of Change
 
