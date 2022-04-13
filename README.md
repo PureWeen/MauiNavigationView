@@ -6,7 +6,7 @@ https://github.com/dotnet/maui/pull/5811
 
 ## Why do you register to some many DP's? That seems weird
 
-There doesn't appear to be many places where you can customize the size/margin of things on the NavigationView. 
+There doesn't appear to be many places where you can customize the size/margin of things on the NavigationView. So, I just wait for the source code to make a change that doesn't work for me and then I change it back
 
 https://github.com/microsoft/microsoft-ui-xaml/blob/main/dev/NavigationView/NavigationView.cpp#L90-L96
 https://github.com/microsoft/microsoft-ui-xaml/blob/main/dev/NavigationView/NavigationView.cpp#L4574
