@@ -7,7 +7,7 @@
         UserTemplateName="MauiAppTitleBarTemplate" 
         DefaultTemplateName="MauiAppTitleBarTemplateDefault"
         x:Key="MauiAppTitleBarTemplateSelector"/>
-    
+
     <maui:DefaultOrUserDataTemplateSelector 
         UserTemplateName="MauiAppTitleBarContainerTemplate" 
         DefaultTemplateName="MauiAppTitleBarContainerTemplateDefault"
@@ -85,5 +85,4 @@
             </Setter.Value>
         </Setter>
     </Style>
-
 </ResourceDictionary> 

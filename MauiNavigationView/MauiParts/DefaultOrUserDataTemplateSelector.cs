@@ -5,26 +5,29 @@ namespace Microsoft.Maui.Platform
 {
 	class DefaultOrUserDataTemplateSelector : DataTemplateSelector
 	{
-		public string UserTemplateName { get; set; }
-		public string DefaultTemplateName { get; set; }
+		public string? UserTemplateName { get; set; }
+		public string? DefaultTemplateName { get; set; }
 
 		protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
 		{
-			if (container is FrameworkElement fe &&
+			if (UserTemplateName != null &&
+				container is FrameworkElement fe &&
 				fe.Resources.TryGetValue(UserTemplateName, out object dt) &&
 				dt is DataTemplate dataTemplate)
 			{
 				return dataTemplate;
 			}
 
-			if (Application.Current.Resources.TryGetValue(UserTemplateName, out object appTitleBar) &&
+			if (UserTemplateName != null &&
+				Application.Current.Resources.TryGetValue(UserTemplateName, out object appTitleBar) &&
 				appTitleBar is DataTemplate appTitleBarDataTemplate)
 			{
 				return appTitleBarDataTemplate;
 			}
 
 
-			if (Application.Current.Resources.TryGetValue(DefaultTemplateName, out object defaultTemplate) &&
+			if (DefaultTemplateName != null &&
+				Application.Current.Resources.TryGetValue(DefaultTemplateName, out object defaultTemplate) &&
 				defaultTemplate is DataTemplate defaultDataTemplate)
 				return defaultDataTemplate;
 
