@@ -4,6 +4,17 @@ WinUI3 bits of .NET MAUI NavigationView extracted out to a WinUI 3 only project.
 
 https://github.com/dotnet/maui/pull/5811
 
+## Why do you register to some many DP's? That seems weird
+
+There doesn't appear to be many places where you can customize the size/margin of things on the NavigationView. 
+
+https://github.com/microsoft/microsoft-ui-xaml/blob/main/dev/NavigationView/NavigationView.cpp#L90-L96
+https://github.com/microsoft/microsoft-ui-xaml/blob/main/dev/NavigationView/NavigationView.cpp#L4574
+
+## Why aren't you using a your own Style ControlTemplate?
+
+We'd like to just keep the NavigationView using as much of the default ControlTemplate as possible. When we update WinUI the NavigationView will just use the new ControlTemplate. We have tests in place to check that things all still measure/layout correctly if we need to adjust.
+
 ## TODO
 - Switch Implementation from `Window.SetTitleBar` to `AppWindow` APIs so that we can do draggable areas and styling
 - Figure out a Windows 10 solution
