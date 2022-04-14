@@ -27,32 +27,11 @@ namespace MauiNavigationView
 	/// <summary>
 	/// An empty window that can be used on its own or navigated to within a Frame.
 	/// </summary>
-	public sealed partial class MainWindow : Window
+	public sealed partial class MainPage : Page
 	{
-		public MainWindow()
+		public MainPage()
 		{
 			this.InitializeComponent();
-			NavigationRootManager.Instance = new NavigationRootManager(this);
-			this.ExtendsContentIntoTitleBar = true;
-
-			NavigationRootManager.Instance.Connect(new MainPage());
-
-			//NavigationRootManager.Instance.Connect(
-			//	new Microsoft.Maui.Platform.MauiNavigationView()
-			//	{
-			//		Content = new TextBlock() { Text = "CONTENT" },
-			//		PaneDisplayMode = NavigationViewPaneDisplayMode.Top,
-			//		IsBackButtonVisible = NavigationViewBackButtonVisible.Collapsed,
-			//		IsSettingsVisible = false,
-			//		IsPaneToggleButtonVisible = false
-			//	});
-
-			Content = NavigationRootManager.Instance.RootView;
-
-
-			var mauiRootView = NavigationRootManager.Instance.RootView as WindowRootView;
-
-
 		}
 	}
 }

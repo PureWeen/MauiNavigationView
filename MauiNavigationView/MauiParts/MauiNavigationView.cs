@@ -278,11 +278,11 @@ namespace Microsoft.Maui.Platform
 		#endregion
 
 		#region Flyout Custom Content
-		internal static readonly DependencyProperty FlyoutCustomContentProperty
+		public static readonly DependencyProperty FlyoutCustomContentProperty
 			= DependencyProperty.Register(nameof(FlyoutCustomContent), typeof(UIElement), typeof(MauiNavigationView),
 				new PropertyMetadata(null, (d, _) => ((RootNavigationView)d).UpdateFlyoutCustomContent()));
 
-		internal UIElement? FlyoutCustomContent
+		public UIElement? FlyoutCustomContent
 		{
 			get => (UIElement?)GetValue(FlyoutCustomContentProperty);
 			set => SetValue(FlyoutCustomContentProperty, value);

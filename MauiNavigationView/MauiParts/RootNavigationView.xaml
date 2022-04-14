@@ -12,7 +12,6 @@
 	PaneDisplayMode = "Left"
 	IsTitleBarAutoPaddingEnabled = "false"
 	IsBackButtonVisible = "Visible"
-    PaneToggleButtonHeight="30"
     >
     <!--<platform:MauiNavigationView.Toolbar>
         <platform:TestMauiToolbar>
