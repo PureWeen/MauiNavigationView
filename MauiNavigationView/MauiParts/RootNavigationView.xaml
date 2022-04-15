@@ -12,6 +12,7 @@
 	PaneDisplayMode = "Left"
 	IsTitleBarAutoPaddingEnabled = "false"
 	IsBackButtonVisible = "Visible"
+    FlowDirection="RightToLeft"
     >
     <!--<platform:MauiNavigationView.Toolbar>
         <platform:TestMauiToolbar>

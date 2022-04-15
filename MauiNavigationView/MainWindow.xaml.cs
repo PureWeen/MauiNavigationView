@@ -37,22 +37,16 @@ namespace MauiNavigationView
 
 			NavigationRootManager.Instance.Connect(new MainPage());
 
-			//NavigationRootManager.Instance.Connect(
-			//	new Microsoft.Maui.Platform.MauiNavigationView()
-			//	{
-			//		Content = new TextBlock() { Text = "CONTENT" },
-			//		PaneDisplayMode = NavigationViewPaneDisplayMode.Top,
-			//		IsBackButtonVisible = NavigationViewBackButtonVisible.Collapsed,
-			//		IsSettingsVisible = false,
-			//		IsPaneToggleButtonVisible = false
-			//	});
-
 			Content = NavigationRootManager.Instance.RootView;
 
+			var WindowHandle = this.GetWindowHandle();
 
-			var mauiRootView = NavigationRootManager.Instance.RootView as WindowRootView;
+			// Retrieve current extended style
+			var extended_style = PlatformMethods.GetWindowLongPtr(WindowHandle, PlatformMethods.WindowLongFlags.GWL_EXSTYLE);
+			long updated_style = extended_style | (long)PlatformMethods.ExtendedWindowStyles.WS_EX_LAYOUTRTL;
 
-
+			if (updated_style != extended_style)
+				PlatformMethods.SetWindowLongPtr(WindowHandle, PlatformMethods.WindowLongFlags.GWL_EXSTYLE, updated_style);
 		}
 	}
 }
