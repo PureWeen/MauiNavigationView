@@ -104,10 +104,8 @@ namespace Microsoft.Maui.Platform
 
 			// WinUI has this set to -1,3,-1,3 but I'm not really sure why
 			// It causes the content to not be flush up against the title bar
-			PaneContentGrid.Margin = new WThickness(-1, 0, -1, 0);
+			PaneContentGrid.Margin = new WThickness(0, 0, 0, 0);
 			UpdateMenuItemsContainerHeight();
-
-
 		}
 
 
@@ -139,11 +137,11 @@ namespace Microsoft.Maui.Platform
 		}
 
 		#region Toolbar
-		internal static readonly DependencyProperty ToolbarProperty
+		public static readonly DependencyProperty ToolbarProperty
 			= DependencyProperty.Register(nameof(Toolbar), typeof(UIElement), typeof(MauiNavigationView),
 				new PropertyMetadata(null, (d, _) => ((RootNavigationView)d).ToolbarChanged()));
 
-		internal UIElement? Toolbar
+		public UIElement? Toolbar
 		{
 			get => (UIElement?)GetValue(ToolbarProperty);
 			set => SetValue(ToolbarProperty, value);
@@ -183,11 +181,11 @@ namespace Microsoft.Maui.Platform
 		#endregion
 
 		#region NavigationViewButtonHolderGridMargin
-		internal static readonly DependencyProperty NavigationViewButtonHolderGridMarginProperty
+		public static readonly DependencyProperty NavigationViewButtonHolderGridMarginProperty
 			= DependencyProperty.Register(nameof(NavigationViewButtonHolderGridMargin), typeof(WThickness), typeof(MauiNavigationView),
 				new PropertyMetadata((WThickness)Application.Current.Resources["NavigationViewButtonHolderGridMargin"], NavigationViewButtonHolderGridMarginChanged));
 
-		internal WThickness NavigationViewButtonHolderGridMargin
+		public WThickness NavigationViewButtonHolderGridMargin
 		{
 			get => (WThickness)GetValue(NavigationViewButtonHolderGridMarginProperty);
 			set => SetValue(NavigationViewButtonHolderGridMarginProperty, value);
@@ -206,11 +204,11 @@ namespace Microsoft.Maui.Platform
 		#endregion
 
 		#region NavigationViewContentMargin
-		internal static readonly DependencyProperty NavigationViewContentMarginProperty
+		public static readonly DependencyProperty NavigationViewContentMarginProperty
 			= DependencyProperty.Register(nameof(NavigationViewContentMargin), typeof(WThickness), typeof(MauiNavigationView),
 				new PropertyMetadata(new WThickness(), OnNavigationViewContentMarginChanged));
 
-		internal WThickness NavigationViewContentMargin
+		public WThickness NavigationViewContentMargin
 		{
 			get => (WThickness)GetValue(NavigationViewContentMarginProperty);
 			set => SetValue(NavigationViewContentMarginProperty, value);
@@ -232,21 +230,21 @@ namespace Microsoft.Maui.Platform
 		internal static double DefaultNavigationBackButtonHeight => (double)Application.Current.Resources["NavigationBackButtonHeight"];
 		internal static double DefaultNavigationBackButtonWidth => (double)Application.Current.Resources["NavigationBackButtonWidth"];
 
-		internal static readonly DependencyProperty NavigationBackButtonHeightProperty
+		public static readonly DependencyProperty NavigationBackButtonHeightProperty
 			= DependencyProperty.Register(nameof(NavigationBackButtonHeight), typeof(double), typeof(MauiNavigationView),
 				new PropertyMetadata(DefaultNavigationBackButtonHeight, OnNavigationBackButtonSizeChanged));
 
-		internal double NavigationBackButtonHeight
+		public double NavigationBackButtonHeight
 		{
 			get => (double)GetValue(NavigationBackButtonHeightProperty);
 			set => SetValue(NavigationBackButtonHeightProperty, value);
 		}
 
-		internal static readonly DependencyProperty NavigationBackButtonWidthProperty
+		public static readonly DependencyProperty NavigationBackButtonWidthProperty
 			= DependencyProperty.Register(nameof(NavigationBackButtonWidth), typeof(double), typeof(MauiNavigationView),
 				new PropertyMetadata(DefaultNavigationBackButtonWidth, OnNavigationBackButtonSizeChanged));
 
-		internal double NavigationBackButtonWidth
+		public double NavigationBackButtonWidth
 		{
 			get => (double)GetValue(NavigationBackButtonWidthProperty);
 			set => SetValue(NavigationBackButtonWidthProperty, value);
@@ -302,31 +300,31 @@ namespace Microsoft.Maui.Platform
 
 		internal static WThickness DefaultPaneToggleButtonPadding => (WThickness)Application.Current.Resources["NavigationViewItemButtonMargin"];
 
-		internal static readonly DependencyProperty PaneToggleButtonPaddingProperty
+		public static readonly DependencyProperty PaneToggleButtonPaddingProperty
 			= DependencyProperty.Register(nameof(PaneToggleButtonPadding), typeof(WThickness), typeof(MauiNavigationView),
 				new PropertyMetadata(DefaultPaneToggleButtonPadding, OnPaneToggleButtonSizeChanged));
 
-		internal WThickness PaneToggleButtonPadding
+		public WThickness PaneToggleButtonPadding
 		{
 			get => (WThickness)GetValue(PaneToggleButtonPaddingProperty);
 			set => SetValue(PaneToggleButtonPaddingProperty, value);
 		}
 
-		internal static readonly DependencyProperty PaneToggleButtonHeightProperty
+		public static readonly DependencyProperty PaneToggleButtonHeightProperty
 			= DependencyProperty.Register(nameof(PaneToggleButtonHeight), typeof(double), typeof(MauiNavigationView),
 				new PropertyMetadata(DefaultPaneToggleButtonHeight, OnPaneToggleButtonSizeChanged));
 
-		internal double PaneToggleButtonHeight
+		public double PaneToggleButtonHeight
 		{
 			get => (double)GetValue(PaneToggleButtonHeightProperty);
 			set => SetValue(PaneToggleButtonHeightProperty, value);
 		}
 
-		internal static readonly DependencyProperty PaneToggleButtonWidthProperty
+		public static readonly DependencyProperty PaneToggleButtonWidthProperty
 			= DependencyProperty.Register(nameof(PaneToggleButtonWidth), typeof(double), typeof(MauiNavigationView),
 				new PropertyMetadata(DefaultPaneToggleButtonWidth, OnPaneToggleButtonSizeChanged));
 
-		internal double PaneToggleButtonWidth
+		public double PaneToggleButtonWidth
 		{
 			get => (double)GetValue(PaneToggleButtonWidthProperty);
 			set => SetValue(PaneToggleButtonWidthProperty, value);

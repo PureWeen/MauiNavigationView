@@ -35,7 +35,7 @@ namespace MauiNavigationView
 			NavigationRootManager.Instance = new NavigationRootManager(this);
 			this.ExtendsContentIntoTitleBar = true;
 
-			NavigationRootManager.Instance.Connect(new MainPage());
+			NavigationRootManager.Instance.Connect(new ShellItemView());
 
 			//NavigationRootManager.Instance.Connect(
 			//	new Microsoft.Maui.Platform.MauiNavigationView()

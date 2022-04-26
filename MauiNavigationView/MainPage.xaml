@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:platform="using:Microsoft.Maui.Platform"
     mc:Ignorable="d">
-    <StackPanel>
+    <StackPanel Background="Yellow">
         <Button Content="Hello there friends"></Button>
         <TextBlock Text="What is this Text Block"></TextBlock>
     </StackPanel>

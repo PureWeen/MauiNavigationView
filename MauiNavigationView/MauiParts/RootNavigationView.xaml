@@ -11,7 +11,7 @@
     IsBackEnabled="True"
 	PaneDisplayMode = "Left"
 	IsTitleBarAutoPaddingEnabled = "false"
-	IsBackButtonVisible = "Visible"
+	IsBackButtonVisible = "Collapsed"
     >
     <!--<platform:MauiNavigationView.Toolbar>
         <platform:TestMauiToolbar>
@@ -32,7 +32,7 @@
         </StackPanel>
     </platform:MauiNavigationView.PaneFooter> -->
     <platform:MauiNavigationView.FlyoutCustomContent>
-        <StackPanel>
+        <StackPanel Background="Purple">
             <TextBlock VerticalAlignment="Top"  TextWrapping="Wrap"
             Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac mi ipsum. Phasellus vel malesuada mauris. Donec pharetra, enim sit amet mattis tincidunt, felis nisi semper lectus, vel porta diam nisi in augue. Pellentesque lacus tortor, aliquam et faucibus id, rhoncus ut justo. Sed id lectus odio, eget pulvinar diam. Suspendisse eleifend ornare libero, in luctus purus aliquet non. Sed interdum, sem vitae rutrum rhoncus, felis ligula ultrices sem, in eleifend eros ante id neque." />
         </StackPanel>

@@ -9,6 +9,20 @@
             <ResourceDictionary.MergedDictionaries>
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
                 <ResourceDictionary Source="MauiParts/WindowRootViewStyle.xaml" />
+
+                <ResourceDictionary>
+                    <DataTemplate x:Key="TabBarNavigationViewMenuItem">
+                        <NavigationViewItem 
+                            x:Name="navViewItem"
+                            Content="{Binding Content}" 
+                            Foreground="{Binding Foreground}" 
+                            Background="{Binding Background}" 
+                            IsSelected="{Binding IsSelected, Mode=TwoWay}"
+                            MenuItemsSource="{Binding MenuItemsSource}"
+                            Icon="{Binding Icon}"
+                            />
+                    </DataTemplate>
+                </ResourceDictionary>
                 <!-- Other merged dictionaries here -->
             </ResourceDictionary.MergedDictionaries>
             <!-- Other app resources here -->
@@ -16,7 +30,28 @@
             <!--<DataTemplate x:Key="MauiAppTitleBarTemplate">
                 <TextBlock Height="300">RABBITS</TextBlock>
             </DataTemplate>-->
-
+            <!--<DataTemplate x:Key="MauiAppTitleBarContainerTemplate">
+                <Grid HorizontalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"></ColumnDefinition>
+                        <ColumnDefinition Width="100"></ColumnDefinition>
+                        <ColumnDefinition Width="100"></ColumnDefinition>
+                        <ColumnDefinition Width="100"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Content="Click Me"></Button>
+                    <Button Grid.Column="1" Content="Click Me"></Button>
+                    <Button Grid.Column="2" Content="Click Me"></Button>
+                    <Button Grid.Column="3" Content="Click Me"></Button>
+                    <ContentControl
+                        Grid.Column="4"
+                        IsTabStop="False"
+                        HorizontalContentAlignment="Stretch"
+                        VerticalContentAlignment="Stretch"
+                        x:Name="AppTitleBarContentControl">
+                    </ContentControl>
+                </Grid>
+            </DataTemplate>-->
         </ResourceDictionary>
 
     </Application.Resources>
