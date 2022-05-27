@@ -15,6 +15,14 @@ using WPoint = Windows.Foundation.Point;
 
 namespace Microsoft.Maui.Platform
 {
+
+	public static class ControlExtensions
+	{
+
+		public static void UpdateForegroundColor(this Control platformControl, WBrush? color, UI.Xaml.Media.Brush? defaultBrush = null) =>
+			platformControl.Foreground = color ?? defaultBrush ?? platformControl.Foreground;
+	}
+
 	internal static class FrameworkElementExtensions
 	{
 		static readonly Lazy<ConcurrentDictionary<Type, DependencyProperty>> ForegroundProperties =
@@ -27,6 +35,7 @@ namespace Microsoft.Maui.Platform
 
 			return def;
 		}
+
 		internal static IEnumerable<T?> GetDescendantsByName<T>(this DependencyObject parent, string elementName) where T : DependencyObject
 		{
 			var myChildrenCount = VisualTreeHelper.GetChildrenCount(parent);

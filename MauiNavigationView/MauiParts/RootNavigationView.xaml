@@ -11,7 +11,7 @@
     IsBackEnabled="True"
 	PaneDisplayMode = "Left"
 	IsTitleBarAutoPaddingEnabled = "false"
-	IsBackButtonVisible = "Collapsed"
+	IsBackButtonVisible = "Visible"
     >
     <!--<platform:MauiNavigationView.Toolbar>
         <platform:TestMauiToolbar>

@@ -5,7 +5,7 @@ using System.Globalization;
 
 namespace Microsoft.Maui.Graphics
 {
-    [DebuggerDisplay("X={X}, Y={Y}, Width={Width}, Height={Height}")]
+	[DebuggerDisplay("X={X}, Y={Y}, Width={Width}, Height={Height}")]
     public struct Rect
     {
         public Rect()

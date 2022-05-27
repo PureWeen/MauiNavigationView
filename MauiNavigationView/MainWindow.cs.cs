@@ -1,4 +1,5 @@
-﻿using Microsoft.Maui.Platform;
+﻿using Microsoft.Maui;
+using Microsoft.Maui.Platform;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
@@ -27,15 +28,13 @@ namespace MauiNavigationView
 	/// <summary>
 	/// An empty window that can be used on its own or navigated to within a Frame.
 	/// </summary>
-	public sealed partial class MainWindow : Window
+	public sealed partial class MainWindow : MauiWinUIWindow
 	{
 		public MainWindow()
 		{
-			this.InitializeComponent();
 			NavigationRootManager.Instance = new NavigationRootManager(this);
-			this.ExtendsContentIntoTitleBar = true;
 
-			NavigationRootManager.Instance.Connect(new ShellItemView());
+			NavigationRootManager.Instance.Connect(new MainPage());
 
 			//NavigationRootManager.Instance.Connect(
 			//	new Microsoft.Maui.Platform.MauiNavigationView()
