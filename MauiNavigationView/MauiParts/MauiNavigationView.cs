@@ -128,7 +128,7 @@ namespace Microsoft.Maui.Platform
 			PaneHeaderContentBorderRow.RegisterPropertyChangedCallback(RowDefinition.MinHeightProperty, (_, __) =>
 				PaneHeaderContentBorderRow.MinHeight = 0);
 
-			// WinUI has this set to -1,3,-1,3 but I'm not really sure why
+			// WinUI has this set to -1,3,-1,3
 			// It causes the content to not be flush up against the title bar
 			PaneContentGrid.Margin = new WThickness(0, 0, 0, 0);
 			UpdateMenuItemsContainerHeight();
