@@ -210,5 +210,19 @@ namespace Microsoft.Maui.Platform
 			WPoint screenCoords = ttv.TransformPoint(new WPoint(0, 0));
 			return new WPoint(screenCoords.X, screenCoords.Y);
 		}
+
+		internal static void RefreshThemeResources(this FrameworkElement nativeView)
+		{
+			var previous = nativeView.RequestedTheme;
+
+			// Workaround for https://github.com/dotnet/maui/issues/7820
+			nativeView.RequestedTheme = nativeView.ActualTheme switch
+			{
+				ElementTheme.Dark => ElementTheme.Light,
+				_ => ElementTheme.Dark
+			};
+
+			nativeView.RequestedTheme = previous;
+		}
 	}
 }
