@@ -161,11 +161,11 @@ namespace Microsoft.Maui.Platform
 		}
 
 		#region Toolbar
-		internal static readonly DependencyProperty ToolbarProperty
+		public static readonly DependencyProperty ToolbarProperty
 			= DependencyProperty.Register(nameof(Toolbar), typeof(UIElement), typeof(MauiNavigationView),
 				new PropertyMetadata(null, (d, _) => ((RootNavigationView)d).ToolbarChanged()));
 
-		internal UIElement? Toolbar
+		public UIElement? Toolbar
 		{
 			get => (UIElement?)GetValue(ToolbarProperty);
 			set => SetValue(ToolbarProperty, value);
