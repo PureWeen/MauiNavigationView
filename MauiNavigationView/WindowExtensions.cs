@@ -1,22 +1,20 @@
 ﻿using MauiNavigationView;
 using System;
 using System.Threading.Tasks;
+using Windows.UI;
 using WinRT.Interop;
 
 namespace Microsoft.Maui.Platform
 {
 	public static partial class WindowExtensions
 	{
-		public static void UpdateTitle(this UI.Xaml.Window platformWindow, IWindow window)
-		{
-			platformWindow.Title = window.Title;
-
-			var rootManager = NavigationRootManager.Instance;
-			if (rootManager != null)
-			{
-				rootManager.SetWindowTitle(window.Title);
-			}
-		}
+		//public static void UpdateTitle(this UI.Xaml.Window platformWindow, IWindow window)
+		//{
+		//	platformWindow.Title = window.Title;
+		//	mauiContext?
+		//		.GetNavigationRootManager()?
+		//		.SetTitle(window.Title);
+		//}
 
 		public static IWindow? GetWindow(this UI.Xaml.Window platformWindow)
 		{

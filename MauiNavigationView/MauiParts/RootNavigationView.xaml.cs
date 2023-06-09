@@ -1,12 +1,11 @@
-#nullable enable
 using System;
 using System.Threading.Tasks;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Data;
 using Windows.Foundation;
-using WThickness = Microsoft.UI.Xaml.Thickness;
 using WGridLength = Microsoft.UI.Xaml.GridLength;
+using WThickness = Microsoft.UI.Xaml.Thickness;
 
 namespace Microsoft.Maui.Platform
 {
@@ -18,15 +17,16 @@ namespace Microsoft.Maui.Platform
 		double AppBarTitleHeight => _useCustomAppTitleBar ? _appBarTitleHeight : 0;
 		double _appBarTitleHeight;
 		bool _useCustomAppTitleBar;
+		readonly FlyoutPanel _flyoutPanel = new FlyoutPanel();
 
 		public RootNavigationView()
 		{
 			InitializeComponent();
-			IsSettingsVisible = false;
-			IsPaneToggleButtonVisible = false;
-			PaneDisplayMode = NavigationViewPaneDisplayMode.LeftMinimal;
-			IsTitleBarAutoPaddingEnabled = false;
-			IsBackButtonVisible = NavigationViewBackButtonVisible.Collapsed;
+			//IsSettingsVisible = false;
+			//IsPaneToggleButtonVisible = false;
+			//PaneDisplayMode = NavigationViewPaneDisplayMode.LeftMinimal;
+			//IsTitleBarAutoPaddingEnabled = false;
+			//IsBackButtonVisible = NavigationViewBackButtonVisible.Collapsed;
 
 			RegisterPropertyChangedCallback(IsBackButtonVisibleProperty, BackButtonVisibleChanged);
 			RegisterPropertyChangedCallback(OpenPaneLengthProperty, PaneLengthPropertyChanged);
@@ -252,7 +252,6 @@ namespace Microsoft.Maui.Platform
 			UpdateNavigationAndPaneButtonHolderGridStyles();
 		}
 
-
 		void UpdateNavigationAndPaneButtonHolderGridStyles()
 		{
 			var buttonHeight = Math.Min(_appBarTitleHeight, DefaultNavigationBackButtonHeight);
@@ -270,7 +269,6 @@ namespace Microsoft.Maui.Platform
 			if (PaneDisplayMode == NavigationViewPaneDisplayMode.LeftMinimal ||
 				PaneDisplayMode == NavigationViewPaneDisplayMode.Top)
 			{
-
 				NavigationViewButtonHolderGridMargin = new WThickness(0, 0, 0, 0);
 				NavigationViewBackButtonMargin = new WThickness(0, 0, 0, 0);
 				PaneToggleButtonPadding = new WThickness();
@@ -342,8 +340,6 @@ namespace Microsoft.Maui.Platform
 			_flyoutPanel.InvalidateMeasure();
 		}
 
-		readonly FlyoutPanel _flyoutPanel = new FlyoutPanel();
-
 		void ReplacePaneMenuItemsWithCustomContent(UIElement? customContent)
 		{
 			_flyoutPanel.Children.Clear();
@@ -382,6 +378,7 @@ namespace Microsoft.Maui.Platform
 					return new Size(0, 0);
 
 				FlyoutContent.Measure(new Size(ContentWidth, availableSize.Height));
+
 				return FlyoutContent.DesiredSize;
 			}
 
@@ -397,6 +394,7 @@ namespace Microsoft.Maui.Platform
 				}
 
 				FlyoutContent.Arrange(new Rect(0, 0, finalSize.Width, finalSize.Height));
+
 				return new Size(FlyoutContent.ActualWidth, FlyoutContent.ActualHeight);
 			}
 		}

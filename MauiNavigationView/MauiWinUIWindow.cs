@@ -15,6 +15,7 @@ namespace Microsoft.Maui
 
 		public MauiWinUIWindow()
 		{
+			Activated += OnActivated;
 			Closed += OnClosedPrivate;
 			// We set this to true by default so later on if it's
 			// set to false we know the user toggled this to false 
@@ -22,6 +23,11 @@ namespace Microsoft.Maui
 			ExtendsContentIntoTitleBar = true;
 		}
 
+
+		protected virtual void OnActivated(object sender, UI.Xaml.WindowActivatedEventArgs args)
+		{
+			System.Diagnostics.Debug.WriteLine($"OnActivated: {args.WindowActivationState} {args.Handled} {args}");
+		}
 
 		private void OnClosedPrivate(object sender, UI.Xaml.WindowEventArgs args)
 		{

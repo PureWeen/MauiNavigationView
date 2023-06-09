@@ -50,8 +50,19 @@ namespace MauiNavigationView
 
 
 			var mauiRootView = NavigationRootManager.Instance.RootView as WindowRootView;
+			mauiRootView.Toolbar = new TestMauiToolbar();
+			if (Content is WindowRootView wrv && wrv.Content is RootNavigationView rnv)
+				rnv.Loaded += RootView_Loaded;
+		}
 
-
+		private void RootView_Loaded(object sender, RoutedEventArgs e)
+		{
+			if (sender is RootNavigationView rnv)
+			{
+				rnv.MenuItems.Add(new NavigationViewItem() { Content = "asdf" });
+				rnv.MenuItems.Add(new NavigationViewItem() { Content = "asdf" });
+				rnv.MenuItems.Add(new NavigationViewItem() { Content = "asdf" });
+			}
 		}
 	}
 }
