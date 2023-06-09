@@ -23,7 +23,7 @@ namespace Microsoft.Maui.Platform
 			// Standard title bar height is 32px
 			// This should always get set by the code after but
 			// we are setting it just in case
-			var appbarHeight = 0;
+			var appbarHeight = 32;
 			if (AppWindowTitleBar.IsCustomizationSupported())
 			{
 				var density = _platformWindow.GetDisplayDensity();

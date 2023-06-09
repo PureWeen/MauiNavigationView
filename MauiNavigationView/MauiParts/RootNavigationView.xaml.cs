@@ -21,12 +21,13 @@ namespace Microsoft.Maui.Platform
 
 		public RootNavigationView()
 		{
+			IsSettingsVisible = false;
+			IsPaneToggleButtonVisible = false;
+			PaneDisplayMode = NavigationViewPaneDisplayMode.LeftMinimal;
+			IsTitleBarAutoPaddingEnabled = false;
+			IsBackButtonVisible = NavigationViewBackButtonVisible.Collapsed;
+
 			InitializeComponent();
-			//IsSettingsVisible = false;
-			//IsPaneToggleButtonVisible = false;
-			//PaneDisplayMode = NavigationViewPaneDisplayMode.LeftMinimal;
-			//IsTitleBarAutoPaddingEnabled = false;
-			//IsBackButtonVisible = NavigationViewBackButtonVisible.Collapsed;
 
 			RegisterPropertyChangedCallback(IsBackButtonVisibleProperty, BackButtonVisibleChanged);
 			RegisterPropertyChangedCallback(OpenPaneLengthProperty, PaneLengthPropertyChanged);

@@ -156,8 +156,10 @@ namespace Microsoft.Maui.Platform
 				return;
 			AppTitleBarContainer.Visibility = _titleBarVisibility;
 
-			if (_useCustomAppTitleBar)
+			if (_useCustomAppTitleBar && _titleBarVisibility == Visibility.Collapsed)
 				UpdateAppTitleBar(0, _useCustomAppTitleBar);
+			else
+				UpdateAppTitleBar(32, _useCustomAppTitleBar);
 		}
 
 		void OnAppTitleBarContainerLoaded(object sender, RoutedEventArgs e)
