@@ -24,11 +24,11 @@ namespace Microsoft.Maui.Platform
 			// This should always get set by the code after but
 			// we are setting it just in case
 			var appbarHeight = 0;
-			//if (AppWindowTitleBar.IsCustomizationSupported())
-			//{
-			//	var density = _platformWindow.GetDisplayDensity();
-			//	appbarHeight = (int)(_platformWindow.AppWindow.TitleBar.Height / density);
-			//}
+			if (AppWindowTitleBar.IsCustomizationSupported())
+			{
+				var density = _platformWindow.GetDisplayDensity();
+				appbarHeight = (int)(_platformWindow.AppWindow.TitleBar.Height / density);
+			}
 
 			_rootView.UpdateAppTitleBar(
 					appbarHeight,

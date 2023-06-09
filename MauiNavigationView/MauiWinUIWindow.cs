@@ -20,7 +20,7 @@ namespace Microsoft.Maui
 			// We set this to true by default so later on if it's
 			// set to false we know the user toggled this to false 
 			// and then we can react accordingly
-			ExtendsContentIntoTitleBar = true;
+			AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
 		}
 
 

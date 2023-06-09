@@ -48,7 +48,6 @@ namespace Microsoft.Maui.Platform
 			{
 				_pinPaneDisplayModeTo = value;
 				UpdateToPinnedDisplayMode();
-
 			}
 		}
 
